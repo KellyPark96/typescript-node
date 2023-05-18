@@ -1,0 +1,12 @@
+node_modules
+
+.next
+.idea
+dist
+.env
+.env.local
+
+.DS_Store
+
+.idea
+/.idea
