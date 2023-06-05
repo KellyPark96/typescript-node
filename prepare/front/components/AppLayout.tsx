@@ -1,12 +1,17 @@
-import {ReactNode} from "react";
+import {ReactNode, useState} from "react";
 import {Col, Input, Menu, Row} from "antd";
 import Link from "next/link";
+import styled from "styled-components";
+
+import UserProfile from "./UserProfile";
+import LoginForm from "./LoginForm";
 
 type LayoutProps = {
     children: ReactNode;
 }
 
 const AppLayout = ({children}: LayoutProps) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     return (
         <div>
             <Menu mode="horizontal">
@@ -17,16 +22,16 @@ const AppLayout = ({children}: LayoutProps) => {
                     <Link href="/profile">Profile</Link>
                 </Menu.Item>
                 <Menu.Item>
-                    <Input.Search enterButton style={{
-                        verticalAlign: 'middle'
-                    }}/>
+                    <SearchInput enterButton/>
                 </Menu.Item>
                 <Menu.Item>
                     <Link href="/signup">SignUp</Link>
                 </Menu.Item>
             </Menu>
             <Row gutter={8}>
-                <Col xs={24} md={6}>왼쪽메뉴</Col>
+                <Col xs={24} md={6}>
+                    {isLoggedIn ? <UserProfile/> : <LoginForm/>}
+                </Col>
                 <Col xs={24} md={12}>{children}</Col>
                 <Col xs={24} md={6}>
                     <a href="https://github.com/KellyPark96"
@@ -39,5 +44,9 @@ const AppLayout = ({children}: LayoutProps) => {
         </div>
     )
 }
+
+const SearchInput = styled(Input.Search)`
+  vertical-align: middle;
+`;
 
 export default AppLayout;
