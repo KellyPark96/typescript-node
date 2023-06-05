@@ -3,7 +3,7 @@ import Link from "next/link";
 import {useCallback, useState} from "react";
 import styled from "styled-components";
 
-const LoginForm = () => {
+const LoginForm = ({setIsLoggedIn}) => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
 
@@ -15,10 +15,14 @@ const LoginForm = () => {
         setPassword(e.target.value);
     }, []);
 
+    const onSubmitForm = useCallback((e) => {
+        setIsLoggedIn(true);
+    }, [id, password]);
+
     return (
-        <Form>
+        <FormWrapper onFinish={onSubmitForm}>
             <div>
-                <label htmlFor="user-id">아이디</label>
+                <label htmlFor="user-id">Id</label>
                 <br/>
                 <Input name="user-id"
                        value={id}
@@ -27,7 +31,7 @@ const LoginForm = () => {
                 />
             </div>
             <div>
-                <label htmlFor="user-password">비밀번호</label>
+                <label htmlFor="user-password">Password</label>
                 <br/>
                 <Input name="user-password"
                        type="password"
@@ -40,16 +44,20 @@ const LoginForm = () => {
                 <Button type="primary"
                         htmlType="submit"
                         loading={false}>
-                    로그인
+                    Login
                 </Button>
-                <Link href="/signup"><Button>회원가입</Button></Link>
+                <Link href="/signup"><Button>Signup</Button></Link>
             </ButtonWrapper>
-        </Form>
+        </FormWrapper>
     )
 }
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
+`;
+
+const FormWrapper = styled(Form)`
+  padding: 10px;
 `;
 
 export default LoginForm;
