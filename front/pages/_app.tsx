@@ -1,6 +1,7 @@
 import 'antd/dist/reset.css';
 import {AppProps} from "next/app";
 import Head from "next/head";
+import wrapper from "../store/configureStore";
 
 const App = ({Component, pageProps}: AppProps) => {
     return (
@@ -14,4 +15,4 @@ const App = ({Component, pageProps}: AppProps) => {
     )
 }
 
-export default App;
+export default wrapper.withRedux(App);
