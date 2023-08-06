@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import { Popover, Card, Button, Avatar } from 'antd';
+import { Popover, Card, Button, Avatar, List } from 'antd';
+import { Comment } from '@ant-design/compatible';
 import { EllipsisOutlined, HeartOutlined, HeartTwoTone, MessageOutlined, RetweetOutlined } from '@ant-design/icons';
 import ButtonGroup from 'antd/lib/button/button-group';
 import { useSelector } from 'react-redux';
 import PostImages from './PostImages';
+import CommentForm from './CommentForm';
 
-interface Props {
+export interface Props {
   post: {
     id: number,
     User: object,
@@ -57,10 +59,24 @@ const PostCard = ({ post }: Props) => {
           description={post.content} />
       </Card>
       {commentFormOpened && (
-        <div>댓글 부분</div>
+        <div>
+          <CommentForm post={post} />
+          <List
+            header={`${post.Comments.length} comments`}
+            itemLayout='horizontal'
+            dataSource={post.Comments}
+            renderItem={item => (
+              <li>
+                <Comment
+                  author={item.User.nickname}
+                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  content={item.content}
+                />
+              </li>
+            )}
+          />
+        </div>
       )}
-      {/*<CommentForm />*/}
-      {/*<Comments />*/}
     </div>
   );
 };
