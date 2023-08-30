@@ -56,7 +56,7 @@ const PostCard = ({ post }: Props) => {
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
           title={post.User.nickname}
-          description={post.content} />
+          description={<PostCardContent postData={post.content} />}
       </Card>
       {commentFormOpened && (
         <div>

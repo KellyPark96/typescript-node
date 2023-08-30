@@ -1,8 +1,7 @@
 import React, { FC, useState } from 'react';
 import Slick from 'react-slick';
 
-import { Overlay, Header, CloseBtn, SlickWrapper, ImgWrapper, Indicator } from './style';
-import { createGlobalStyle } from 'styled-components';
+import { Overlay, Header, CloseBtn, SlickWrapper, ImgWrapper, Indicator, Global } from './style';
 
 interface Props {
   images: [{ src: string }];
@@ -10,11 +9,6 @@ interface Props {
   onClose(): void;
 }
 
-const Global = createGlobalStyle`
-  .slick-slide {
-    display: inline-block;
-  }
-`;
 const ImagesZoom: FC<Props> = ({ images, onClose }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -44,7 +38,7 @@ const ImagesZoom: FC<Props> = ({ images, onClose }) => {
           <Indicator>
             <div>
               {currentSlide + 1}
-              {' '}
+              {''}
               /
               {images.length}
             </div>

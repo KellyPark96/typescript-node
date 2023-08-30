@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { CloseOutlined } from '@ant-design/icons';
 
 export const Overlay = styled.div`
@@ -62,5 +62,11 @@ export const ImgWrapper = styled.div`
   & img {
     margin: 0 auto;
     max-height: 750px;
+  }
+`;
+
+export const Global = createGlobalStyle`
+  .slick-slide {
+    display: inline-block;
   }
 `;
