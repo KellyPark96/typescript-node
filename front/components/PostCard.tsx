@@ -6,6 +6,7 @@ import ButtonGroup from 'antd/lib/button/button-group';
 import { useSelector } from 'react-redux';
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
+import PostCardContent from './PostCardContent';
 
 export interface Props {
   post: {
@@ -56,28 +57,31 @@ const PostCard = ({ post }: Props) => {
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
           title={post.User.nickname}
-          description={<PostCardContent postData={post.content} />}
+          description={<PostCardContent postData={post.content} />} />
       </Card>
-      {commentFormOpened && (
-        <div>
-          <CommentForm post={post} />
-          <List
-            header={`${post.Comments.length} comments`}
-            itemLayout='horizontal'
-            dataSource={post.Comments}
-            renderItem={item => (
-              <li>
-                <Comment
-                  author={item.User.nickname}
-                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
-                  content={item.content}
-                />
-              </li>
-            )}
-          />
-        </div>
-      )}
+      {
+    commentFormOpened && (
+      <div>
+        <CommentForm post={post} />
+        <List
+          header={`${post.Comments.length} comments`}
+          itemLayout='horizontal'
+          dataSource={post.Comments}
+          renderItem={item => (
+            <li>
+              <Comment
+                author={item.User.nickname}
+                avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                content={item.content}
+              />
+            </li>
+          )}
+        />
+      </div>
+    )
+  }
     </div>
+
   );
 };
 export default PostCard;
