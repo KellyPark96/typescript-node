@@ -1,52 +1,53 @@
-import {Button, Form, Input} from "antd";
-import Link from "next/link";
-import {useCallback} from "react";
-import useInput from "../hooks/useInput";
-import styled from "styled-components";
-import {useDispatch} from "react-redux";
-import {loginAction} from "../reducers/user";
+import { Button, Form, Input } from 'antd';
+import Link from 'next/link';
+import { useCallback } from 'react';
+import useInput from '../hooks/useInput';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRequestAction } from '../reducers/user';
 
 const LoginForm = () => {
-    const dispatch = useDispatch();
-    const [id, onChangeId] = useInput('');
-    const [password, onChangePassword] = useInput('');
+  const dispatch = useDispatch();
+  const { isLoggingIn } = useSelector((state) => state.user);
+  const [id, onChangeId] = useInput('');
+  const [password, onChangePassword] = useInput('');
 
-    const onSubmitForm = useCallback((e) => {
-        dispatch(loginAction({id, password}));
-    }, [id, password]);
+  const onSubmitForm = useCallback(
+    (e) => {
+      dispatch(loginRequestAction({ id, password }));
+    },
+    [id, password]
+  );
 
-    return (
-        <FormWrapper onFinish={onSubmitForm}>
-            <div>
-                <label htmlFor="user-id">Id</label>
-                <br/>
-                <Input name="user-id"
-                       value={id}
-                       onChange={onChangeId}
-                       required
-                />
-            </div>
-            <div>
-                <label htmlFor="user-password">Password</label>
-                <br/>
-                <Input name="user-password"
-                       type="password"
-                       value={password}
-                       onChange={onChangePassword}
-                       required
-                />
-            </div>
-            <ButtonWrapper>
-                <Button type="primary"
-                        htmlType="submit"
-                        loading={false}>
-                    Login
-                </Button>
-                <Link href="/signup"><Button>Signup</Button></Link>
-            </ButtonWrapper>
-        </FormWrapper>
-    )
-}
+  return (
+    <FormWrapper onFinish={onSubmitForm}>
+      <div>
+        <label htmlFor="user-id">Id</label>
+        <br />
+        <Input name="user-id" value={id} onChange={onChangeId} required />
+      </div>
+      <div>
+        <label htmlFor="user-password">Password</label>
+        <br />
+        <Input
+          name="user-password"
+          type="password"
+          value={password}
+          onChange={onChangePassword}
+          required
+        />
+      </div>
+      <ButtonWrapper>
+        <Button type="primary" htmlType="submit" loading={isLoggingIn}>
+          Login
+        </Button>
+        <Link href="/signup">
+          <Button>Signup</Button>
+        </Link>
+      </ButtonWrapper>
+    </FormWrapper>
+  );
+};
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
