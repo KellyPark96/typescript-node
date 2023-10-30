@@ -6,17 +6,14 @@ import styled from 'styled-components';
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 import { useSelector } from 'react-redux';
+import { IReducerState } from '../reducers';
 
 type LayoutProps = {
   children: ReactNode;
 };
 
 const AppLayout = ({ children }: LayoutProps) => {
-  const isLoggedIn = useSelector((state) => {
-    console.log(state);
-
-    state.user.isLoggedIn;
-  });
+  const isLoggedIn = useSelector((state: IReducerState) => state.user.isLoggedIn);
   return (
     <div>
       <Menu mode="horizontal">

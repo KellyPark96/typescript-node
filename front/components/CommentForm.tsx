@@ -1,22 +1,17 @@
 import { Button, Form, Input } from 'antd';
 import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { IReducerState } from '../reducers';
+import Post from '../interface/post';
 
 interface Props {
-  post: {
-    id: number,
-    User: object,
-    content: string,
-    createAt: object,
-    Comments: Array<string>,
-    Images: Array<string>,
-  };
+  post: Post;
 }
 
 const CommentForm = ({ post }: Props) => {
   const [commentText, setCommentText] = useState('');
-  const { me } = useSelector((state) => state.user);
-  const onSubmitComment = useCallback((e) => {
+  const { me } = useSelector((state: IReducerState) => state.user);
+  const onSubmitComment = useCallback(() => {
     if (!me) {
       return alert('로그인이 필요합니다');
     }
@@ -29,13 +24,11 @@ const CommentForm = ({ post }: Props) => {
   return (
     <Form onFinish={onSubmitComment}>
       <Form.Item>
-        <Input.TextArea
-          rows={4}
-          value={commentText}
-          onChange={onChangeCommentText}
-        />
+        <Input.TextArea rows={4} value={commentText} onChange={onChangeCommentText} />
       </Form.Item>
-      <Button type='primary' htmlType='submit'>삐약</Button>
+      <Button type="primary" htmlType="submit">
+        삐약
+      </Button>
     </Form>
   );
 };

@@ -5,19 +5,17 @@ import useInput from '../hooks/useInput';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequestAction } from '../reducers/user';
+import { IReducerState } from '../reducers';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { isLoggingIn } = useSelector((state) => state.user);
+  const { isLoggingIn } = useSelector((state: IReducerState) => state.user);
   const [id, onChangeId] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  const onSubmitForm = useCallback(
-    (e) => {
-      dispatch(loginRequestAction({ id, password }));
-    },
-    [id, password]
-  );
+  const onSubmitForm = useCallback(() => {
+    dispatch(loginRequestAction({ id, password }));
+  }, [id, password]);
 
   return (
     <FormWrapper onFinish={onSubmitForm}>

@@ -1,13 +1,13 @@
-import {Form, Input} from "antd";
-import styled from "styled-components";
+import { Form, Input } from 'antd';
+import styled from 'styled-components';
 
 const NicknameEditForm = () => {
-    return (
-        <NicknameEditFormWrapper>
-            <Input.Search addonBefore="Nickname" enterButton="Edit"/>
-        </NicknameEditFormWrapper>
-    )
-}
+  return (
+    <NicknameEditFormWrapper>
+      <Input.Search addonBefore="Nickname" enterButton="Edit" />
+    </NicknameEditFormWrapper>
+  );
+};
 
 const NicknameEditFormWrapper = styled(Form)`
   margin-bottom: 20px;
