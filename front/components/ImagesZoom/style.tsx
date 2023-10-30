@@ -61,12 +61,13 @@ export const ImgWrapper = styled.div`
 
   & img {
     margin: 0 auto;
-    max-height: 750px;
+    width: 100%;
   }
 `;
 
 export const Global = createGlobalStyle`
-  .slick-slide {
-    display: inline-block;
+  .swiper-wrapper {
+    display: inline-flex !important;
+    align-items: center;
   }
 `;

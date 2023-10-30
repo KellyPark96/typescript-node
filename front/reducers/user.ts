@@ -7,6 +7,8 @@ export const initialState = {
   loginData: {},
 };
 
+export type IUserReducerState = typeof initialState;
+
 export const loginRequestAction = (data) => {
   return {
     type: 'LOG_IN_REQUEST',

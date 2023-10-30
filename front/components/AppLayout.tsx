@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { Col, Input, Menu, Row } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -12,7 +12,11 @@ type LayoutProps = {
 };
 
 const AppLayout = ({ children }: LayoutProps) => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const isLoggedIn = useSelector((state) => {
+    console.log(state);
+
+    state.user.isLoggedIn;
+  });
   return (
     <div>
       <Menu mode="horizontal">

@@ -1,7 +1,5 @@
-import React, { FC, useState } from 'react';
-import Slick from 'react-slick';
-
-import { Overlay, Header, CloseBtn, SlickWrapper, ImgWrapper, Indicator, Global } from './style';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Overlay, Header, CloseBtn, SlickWrapper, ImgWrapper, Global } from './style';
 
 interface Props {
   images: [{ src: string }];
@@ -9,9 +7,7 @@ interface Props {
   onClose(): void;
 }
 
-const ImagesZoom: FC<Props> = ({ images, onClose }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
+const ImagesZoom = ({ images, onClose }: Props) => {
   return (
     <Overlay>
       <Global />
@@ -20,30 +16,17 @@ const ImagesZoom: FC<Props> = ({ images, onClose }) => {
         <CloseBtn onClick={onClose} />
       </Header>
       <SlickWrapper>
-        <div>
-          <Slick
-            initialSlide={0}
-            afterChange={(slide) => setCurrentSlide(slide)}
-            infinite={false}
-            arrows
-            slidesToShow={1}
-            slidesToScroll={1}
-          >
-            {images.map((v, index) => (
-              <ImgWrapper key={index}>
-                <img src={v.src} alt={v.src} />
-              </ImgWrapper>
+        <Swiper loop={true} slidesPerView={1}>
+          <div style={{ display: 'flex' }}>
+            {images.map((v) => (
+              <SwiperSlide key={v.src}>
+                <ImgWrapper>
+                  <img src={v.src} alt={v.src} />
+                </ImgWrapper>
+              </SwiperSlide>
             ))}
-          </Slick>
-          <Indicator>
-            <div>
-              {currentSlide + 1}
-              {''}
-              /
-              {images.length}
-            </div>
-          </Indicator>
-        </div>
+          </div>
+        </Swiper>
       </SlickWrapper>
     </Overlay>
   );
