@@ -1,10 +1,10 @@
-import {useCallback, useState} from "react";
+import { useCallback, useState } from 'react';
 
 export default (initialValue = null) => {
-    const [value, setValue] = useState(initialValue);
-    const formEventHandler = useCallback((e) => {
-        setValue(e.target.value);
-    }, []);
+  const [value, setter] = useState(initialValue);
+  const formEventHandler = useCallback((e) => {
+    setter(e.target.value);
+  }, []);
 
-    return [value, formEventHandler];
-}
+  return [value, formEventHandler, setter];
+};

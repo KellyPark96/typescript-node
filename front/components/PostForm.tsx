@@ -1,33 +1,41 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Button, Form, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from '../reducers/post';
 import { IReducerState } from '../reducers';
+import { ADD_POST_REQUEST } from '../reducers/user';
+import useInput from '../hooks/useInput';
 
 const PostForm = () => {
-  const { imagePaths } = useSelector((state: IReducerState) => state.post);
+  const { imagePaths, addPostDone } = useSelector((state: IReducerState) => state.post);
   const imageInput = useRef(null);
   const dispatch = useDispatch();
-  const [text, setText] = useState('');
-  const onChangeText = useCallback((e) => {
-    setText(e.target.value);
-  }, []);
-  const onSubmit = useCallback(() => {
-    dispatch(addPost);
-    setText('');
-  }, []);
+  const [text, onChangeText, setText] = useInput('');
+
+  useEffect(() => {
+    if (addPostDone) {
+      setText('');
+    }
+  }, [addPostDone]);
+
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
   }, [imageInput.current]);
+
+  const onSubmit = useCallback(() => {
+    dispatch({
+      type: ADD_POST_REQUEST,
+      data: text,
+    });
+  }, []);
 
   return (
     <Form style={{ margin: '10px 0 20px' }} encType="multipart/form-data" onFinish={onSubmit}>
       <Input.TextArea value={text} onChange={onChangeText} maxLength={140} placeholder="Issue?" />
       <div>
         <input type="file" multiple hidden ref={imageInput} />
-        <Button onClick={onClickImageUpload}>이미지 업로드</Button>
+        <Button onClick={onClickImageUpload}>Upload Image</Button>
         <Button type="primary" style={{ float: 'right' }} htmlType="submit">
-          제출
+          Submit
         </Button>
       </div>
       <div>
@@ -35,7 +43,7 @@ const PostForm = () => {
           <div key={v} style={{ display: 'inline-block' }}>
             <img src={v} style={{ width: '200px' }} alt={v} />
             <div>
-              <Button>제거</Button>
+              <Button>Delete</Button>
             </div>
           </div>
         ))}

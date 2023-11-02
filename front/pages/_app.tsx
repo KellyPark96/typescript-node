@@ -1,5 +1,5 @@
-import 'antd/dist/reset.css';
 import { AppProps } from 'next/app';
+import 'antd/dist/reset.css';
 import Head from 'next/head';
 import wrapper from '../store/configureStore';
 import { Provider } from 'react-redux';

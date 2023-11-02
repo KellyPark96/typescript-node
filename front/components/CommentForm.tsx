@@ -13,7 +13,7 @@ interface Props {
 const CommentForm = ({ post }: Props) => {
   const dispatch = useDispatch();
   const { addCommentDone, addCommentLoading } = useSelector((state: IReducerState) => state.post);
-  const [commentText, setCommentText] = useInput('');
+  const [commentText, onChangeCommentText, setCommentText] = useInput('');
   const id = useSelector((state: IReducerState) => state.user.me?.id);
 
   useEffect(() => {
@@ -28,9 +28,6 @@ const CommentForm = ({ post }: Props) => {
       data: { content: commentText, userId: id, postId: post.id },
     });
   }, [commentText, id]);
-  const onChangeCommentText = useCallback((e) => {
-    setCommentText(e.target.value);
-  }, []);
 
   return (
     <Form onFinish={onSubmitComment}>

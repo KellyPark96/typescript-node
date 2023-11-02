@@ -68,15 +68,15 @@ export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
 export type IPostReducerState = typeof initialState;
 
-export const addPost = (data) => ({
-  type: ADD_POST_REQUEST,
-  data,
-});
+// export const addPost = (data) => ({
+//   type: ADD_POST_REQUEST,
+//   data,
+// });
 
-export const addComment = (data) => ({
-  type: ADD_COMMENT_REQUEST,
-  data,
-});
+// export const addComment = (data) => ({
+//   type: ADD_COMMENT_REQUEST,
+//   data,
+// });
 
 const dummyPost = (data) => ({
   id: data.id,
