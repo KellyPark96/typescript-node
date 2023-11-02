@@ -68,16 +68,6 @@ export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
 export type IPostReducerState = typeof initialState;
 
-// export const addPost = (data) => ({
-//   type: ADD_POST_REQUEST,
-//   data,
-// });
-
-// export const addComment = (data) => ({
-//   type: ADD_COMMENT_REQUEST,
-//   data,
-// });
-
 const dummyPost = (data) => ({
   id: data.id,
   content: data.content,
@@ -100,6 +90,28 @@ const dummyComment = (data) => ({
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    // LOAD_POSTS
+    case LOAD_POSTS_REQUEST:
+      return {
+        ...state,
+        loadPostsLoading: true,
+        loadPostsDone: false,
+        loadPostsError: null,
+      };
+    case LOAD_POSTS_SUCCESS:
+      return {
+        ...state,
+        // mainPosts: [dummyPost, ...state.mainPosts],
+        loadPostsLoading: false,
+        loadPostsDone: true,
+      };
+    case LOAD_POSTS_FAILURE:
+      return {
+        ...state,
+        loadPostsLoading: false,
+        loadPostsError: action.error,
+      };
+    // ADD_POST
     case ADD_POST_REQUEST:
       return {
         ...state,
@@ -120,6 +132,28 @@ const reducer = (state = initialState, action) => {
         addPostLoading: false,
         addPostError: action.error,
       };
+    // REMOVE_POST
+    case REMOVE_POST_REQUEST:
+      return {
+        ...state,
+        removePostLoading: true,
+        removePostDone: false,
+        removePostError: null,
+      };
+    case REMOVE_POST_SUCCESS:
+      return {
+        ...state,
+        // mainPosts: [dummyComment, ...state.mainPosts],
+        removePostLoading: false,
+        removePostDone: true,
+      };
+    case REMOVE_POST_FAILURE:
+      return {
+        ...state,
+        removePostLoading: false,
+        removePostError: action.error,
+      };
+    // ADD_COMMENT
     case ADD_COMMENT_REQUEST:
       return {
         ...state,

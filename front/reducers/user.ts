@@ -46,10 +46,6 @@ export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST';
 export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS';
 export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
 
-export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
-export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
-export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
-
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
 export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
@@ -78,9 +74,9 @@ export const logoutRequestAction = () => {
 };
 
 const reducer = (state = initialState, action) => {
+  // LOG_IN
   switch (action.type) {
     case LOG_IN_REQUEST:
-      console.log('reducer logIn');
       return {
         ...state,
         logInLoading: true,
@@ -100,6 +96,7 @@ const reducer = (state = initialState, action) => {
         // logInDone: false,
         logInError: action.error,
       };
+    // LOG_OUT
     case LOG_OUT_REQUEST:
       return {
         ...state,
@@ -118,6 +115,94 @@ const reducer = (state = initialState, action) => {
         ...state,
         logOutLoading: false,
         logOutError: action.error,
+      };
+    // SIGN_UP
+    case SIGN_UP_REQUEST:
+      return {
+        ...state,
+        signUpLoading: true,
+        signUpError: null,
+        signUpDone: false,
+      };
+    case SIGN_UP_SUCCESS:
+      return {
+        ...state,
+        signUpLoading: false,
+        signUpDone: true,
+      };
+    case SIGN_UP_FAILURE:
+      return {
+        ...state,
+        signUpLoading: false,
+        signUpError: action.error,
+      };
+    // CHANGE_NICKNAME
+    case CHANGE_NICKNAME_REQUEST:
+      return {
+        ...state,
+        changeNicknameLoading: true,
+        changeNicknameError: null,
+        changeNicknameDone: false,
+      };
+    case CHANGE_NICKNAME_SUCCESS:
+      return {
+        ...state,
+        changeNicknameLoading: false,
+        changeNicknameDone: true,
+      };
+    case CHANGE_NICKNAME_FAILURE:
+      return {
+        ...state,
+        changeNicknameLoading: false,
+        changeNicknameError: action.error,
+      };
+    // FOLLOW
+    case FOLLOW_REQUEST:
+      return {
+        ...state,
+        followLoading: true,
+        followDone: null,
+        followError: false,
+      };
+    case FOLLOW_SUCCESS:
+      return {
+        ...state,
+        followLoading: false,
+        followDone: true,
+      };
+    case FOLLOW_FAILURE:
+      return {
+        ...state,
+        followLoading: false,
+        followError: action.error,
+      };
+    // UNFOLLOW
+    case UNFOLLOW_REQUEST:
+      return {
+        ...state,
+        unfollowLoading: true,
+        unfollowError: null,
+        unfollowDone: false,
+      };
+    case UNFOLLOW_SUCCESS:
+      return {
+        ...state,
+        unfollowLoading: false,
+        unfollowDone: true,
+      };
+    case UNFOLLOW_FAILURE:
+      return {
+        ...state,
+        unfollowLoading: false,
+        unfollowError: action.error,
+      };
+    case ADD_POST_TO_ME:
+      return {
+        ...state,
+      };
+    case REMOVE_POST_OF_ME:
+      return {
+        ...state,
       };
     default:
       return state;
