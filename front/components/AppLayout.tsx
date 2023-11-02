@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { Col, Input, Menu, Row } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -7,32 +7,56 @@ import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 import { useSelector } from 'react-redux';
 import { IReducerState } from '../reducers';
+import { MenuProps } from 'antd/lib';
 
 type LayoutProps = {
   children: ReactNode;
 };
 
 const AppLayout = ({ children }: LayoutProps) => {
-  const isLoggedIn = useSelector((state: IReducerState) => state.user.isLoggedIn);
+  const me = useSelector((state: IReducerState) => state.user.me);
+
+  const items: MenuProps['items'] = [
+    {
+      label: <Link href="/">Home</Link>,
+      key: 'home',
+    },
+    {
+      label: <Link href="/profile">Profile</Link>,
+      key: 'profile',
+    },
+    {
+      label: <Link href="/signup">SignUp</Link>,
+      key: 'signup',
+    },
+  ];
+
+  const [current, setCurrent] = useState('home');
+  const onClickMenu: MenuProps['onClick'] = (e) => {
+    setCurrent(e.key);
+  };
+
   return (
     <div>
-      <Menu mode="horizontal">
-        <Menu.Item>
-          <Link href="/">Home</Link>
-        </Menu.Item>
-        <Menu.Item>
-          <Link href="/profile">Profile</Link>
-        </Menu.Item>
-        <Menu.Item>
-          <SearchInput enterButton />
-        </Menu.Item>
-        <Menu.Item>
-          <Link href="/signup">SignUp</Link>
-        </Menu.Item>
-      </Menu>
+      <div
+        style={{
+          display: 'flex',
+          borderBottom: '1px solid rgba(5, 5, 5, 0.06)',
+          alignItems: 'center',
+        }}
+      >
+        <Menu
+          mode="horizontal"
+          onClick={onClickMenu}
+          selectedKeys={[current]}
+          items={items}
+          style={{ flex: 1, border: 0 }}
+        />
+        <SearchInput enterButton style={{ width: 200 }} />
+      </div>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {isLoggedIn ? <UserProfile /> : <LoginForm />}
+          {me ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}

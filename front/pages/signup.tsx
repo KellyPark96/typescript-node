@@ -3,15 +3,21 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { useCallback, useState } from 'react';
 import useInput from '../hooks/useInput';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { IReducerState } from '../reducers';
+import { SIGN_UP_REQUEST } from '../reducers/user';
 
 const SignUp = () => {
-  const [id, onChangeId] = useInput('');
+  const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [term, setTerm] = useState(false);
   const [termError, setTermError] = useState(false);
+
+  const dispatch = useDispatch();
+  const { signUpLoading, me } = useSelector((state: IReducerState) => state.user);
   const onChangePasswordCheck = useCallback(
     (e) => {
       setPasswordCheck(e.target.value);
@@ -37,16 +43,33 @@ const SignUp = () => {
       return setTermError(true);
     }
 
-    console.log(id);
-  }, [password, passwordCheck, term]);
+    return dispatch({
+      type: SIGN_UP_REQUEST,
+      data: {
+        email,
+        password,
+        nickname,
+      },
+    });
+
+    // eslint-disable-next-line no-unreachable
+    console.log(email, password, passwordCheck, term);
+  }, [email, password, passwordCheck, term]);
 
   return (
     <AppLayout>
       <Form onFinish={onSubmit}>
         <div>
-          <label htmlFor="user-id">Id</label>
+          <label htmlFor="user-email">Email</label>
           <br />
-          <Input id="user-id" name="user-id" value={id} required onChange={onChangeId} />
+          <Input
+            id="user-email"
+            name="user-email"
+            type="email"
+            value={email}
+            required
+            onChange={onChangeEmail}
+          />
         </div>
         <div>
           <label htmlFor="user-nickname">Nickname</label>
@@ -61,6 +84,7 @@ const SignUp = () => {
             name="user-password"
             type="password"
             value={password}
+            autoComplete="off"
             required
             onChange={onChangePassword}
           />
@@ -73,6 +97,7 @@ const SignUp = () => {
             name="user-password-check"
             type="password"
             value={passwordCheck}
+            autoComplete="off"
             required
             onChange={onChangePasswordCheck}
           />
@@ -85,7 +110,7 @@ const SignUp = () => {
           {termError && <ErrorMessage>You need to agree this term.</ErrorMessage>}
         </div>
         <div style={{ marginTop: 10 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={signUpLoading}>
             Signup
           </Button>
         </div>

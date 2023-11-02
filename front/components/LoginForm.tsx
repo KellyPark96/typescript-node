@@ -9,20 +9,20 @@ import { IReducerState } from '../reducers';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { isLoggingIn } = useSelector((state: IReducerState) => state.user);
-  const [id, onChangeId] = useInput('');
+  const { logInLoading } = useSelector((state: IReducerState) => state.user);
+  const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
 
   const onSubmitForm = useCallback(() => {
-    dispatch(loginRequestAction({ id, password }));
-  }, [id, password]);
+    dispatch(loginRequestAction({ email, password }));
+  }, [email, password]);
 
   return (
     <FormWrapper onFinish={onSubmitForm}>
       <div>
-        <label htmlFor="user-id">Id</label>
+        <label htmlFor="user-email">Email</label>
         <br />
-        <Input name="user-id" value={id} onChange={onChangeId} required />
+        <Input name="user-email" value={email} onChange={onChangeEmail} required />
       </div>
       <div>
         <label htmlFor="user-password">Password</label>
@@ -32,11 +32,12 @@ const LoginForm = () => {
           type="password"
           value={password}
           onChange={onChangePassword}
+          autoComplete="off"
           required
         />
       </div>
       <ButtonWrapper>
-        <Button type="primary" htmlType="submit" loading={isLoggingIn}>
+        <Button type="primary" htmlType="submit" loading={logInLoading}>
           Login
         </Button>
         <Link href="/signup">

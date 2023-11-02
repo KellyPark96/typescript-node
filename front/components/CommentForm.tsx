@@ -1,22 +1,33 @@
 import { Button, Form, Input } from 'antd';
-import { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { IReducerState } from '../reducers';
 import Post from '../interface/post';
+import useInput from '../hooks/useInput';
+import { ADD_COMMENT_REQUEST } from '../reducers/post';
 
 interface Props {
   post: Post;
 }
 
 const CommentForm = ({ post }: Props) => {
-  const [commentText, setCommentText] = useState('');
-  const { me } = useSelector((state: IReducerState) => state.user);
-  const onSubmitComment = useCallback(() => {
-    if (!me) {
-      return alert('로그인이 필요합니다');
+  const dispatch = useDispatch();
+  const { addCommentDone, addCommentLoading } = useSelector((state: IReducerState) => state.post);
+  const [commentText, setCommentText] = useInput('');
+  const id = useSelector((state: IReducerState) => state.user.me?.id);
+
+  useEffect(() => {
+    if (addCommentDone) {
+      setCommentText('');
     }
-    return console.log(post.id, commentText);
-  }, [commentText]);
+  }, [addCommentDone]);
+
+  const onSubmitComment = useCallback(() => {
+    dispatch({
+      type: ADD_COMMENT_REQUEST,
+      data: { content: commentText, userId: id, postId: post.id },
+    });
+  }, [commentText, id]);
   const onChangeCommentText = useCallback((e) => {
     setCommentText(e.target.value);
   }, []);
@@ -26,8 +37,8 @@ const CommentForm = ({ post }: Props) => {
       <Form.Item>
         <Input.TextArea rows={4} value={commentText} onChange={onChangeCommentText} />
       </Form.Item>
-      <Button type="primary" htmlType="submit">
-        삐약
+      <Button type="primary" htmlType="submit" loading={addCommentLoading}>
+        add Comment
       </Button>
     </Form>
   );
