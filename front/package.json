@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next -p 3060",
     "build": "next build",
+    "export": "next export -o dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kelly Park",
