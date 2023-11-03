@@ -13,8 +13,8 @@ const Profile = () => {
   return (
     <AppLayout>
       <NicknameEditForm />
-      <FollowList header="Following List" data={me.followings} />
-      <FollowList header="Follower List" data={me.followers} />
+      <FollowList header="Following List" data={me.Followings} />
+      <FollowList header="Follower List" data={me.Followers} />
     </AppLayout>
   );
 };

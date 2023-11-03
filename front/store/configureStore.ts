@@ -12,7 +12,7 @@ const loggerMiddleware =
     if (typeof action === 'function') {
       return action(dispatch, getState);
     }
-    console.log(action);
+    // console.log(action);
     return next(action);
   };
 
@@ -25,7 +25,7 @@ const configureStore = () => {
       : composeWithDevTools(applyMiddleware(...middlewares));
   const store: any = createStore(reducer, enhancer);
   store.sagaTask = sagaMiddleware.run(rootSaga);
-  console.log(store);
+  // console.log(store);
 
   return store;
 };

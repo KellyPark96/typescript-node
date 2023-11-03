@@ -8,6 +8,7 @@ import { IReducerState } from '../reducers';
 const UserProfile = () => {
   const dispatch = useDispatch();
   const { me, logOutLoading } = useSelector((state: IReducerState) => state.user);
+
   const onLogOut = useCallback(() => {
     dispatch(logoutRequestAction());
   }, []);
@@ -18,17 +19,17 @@ const UserProfile = () => {
         <div key="twit">
           Twit
           <br />
-          {me.posts.length}
+          {me.Posts.length}
         </div>,
         <div key="following">
           Following
           <br />
-          {me.followings.length}
+          {me.Followings.length}
         </div>,
         <div key="follower">
           Follower
           <br />
-          {me.followers.length}
+          {me.Followers.length}
         </div>,
       ]}
     >

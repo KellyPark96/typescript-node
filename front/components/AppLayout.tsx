@@ -8,6 +8,7 @@ import LoginForm from './LoginForm';
 import { useSelector } from 'react-redux';
 import { IReducerState } from '../reducers';
 import { MenuProps } from 'antd/lib';
+import { useRouter } from 'next/router';
 
 type LayoutProps = {
   children: ReactNode;
@@ -15,6 +16,9 @@ type LayoutProps = {
 
 const AppLayout = ({ children }: LayoutProps) => {
   const me = useSelector((state: IReducerState) => state.user.me);
+  const router = useRouter();
+
+  const pathName = router.asPath.split('/')[1] === '' ? 'home' : router.asPath.split('/')[1];
 
   const items: MenuProps['items'] = [
     {
@@ -31,7 +35,7 @@ const AppLayout = ({ children }: LayoutProps) => {
     },
   ];
 
-  const [current, setCurrent] = useState('home');
+  const [current, setCurrent] = useState(pathName);
   const onClickMenu: MenuProps['onClick'] = (e) => {
     setCurrent(e.key);
   };
