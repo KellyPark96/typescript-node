@@ -22,11 +22,19 @@ const PostForm = () => {
   }, [imageInput.current]);
 
   const onSubmit = useCallback(() => {
+    console.log('content:', text);
+
     dispatch({
       type: ADD_POST_REQUEST,
       data: text,
     });
-  }, []);
+    console.log(
+      dispatch({
+        type: ADD_POST_REQUEST,
+        data: text,
+      })
+    );
+  }, [text]);
 
   return (
     <Form style={{ margin: '10px 0 20px' }} encType="multipart/form-data" onFinish={onSubmit}>

@@ -47,7 +47,7 @@ const PostCard = ({ post }: PostCardProps) => {
             key="more"
             content={
               <ButtonGroup>
-                {id && post.User.id === id ? (
+                {id && post.User?.id === id ? (
                   <>
                     <Button>Edit</Button>
                     <Button danger>Delete</Button>
@@ -63,8 +63,8 @@ const PostCard = ({ post }: PostCardProps) => {
         ]}
       >
         <Card.Meta
-          avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
-          title={post.User.nickname}
+          avatar={<Avatar>{post.User?.nickname[0]}</Avatar>}
+          title={post.User?.nickname}
           description={<PostCardContent postData={post.content} />}
         />
       </Card>
@@ -79,7 +79,7 @@ const PostCard = ({ post }: PostCardProps) => {
               <li>
                 <Comment
                   author={item.User.nickname}
-                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  avatar={<Avatar>{item.User?.nickname[0]}</Avatar>}
                   content={item.content}
                 />
               </li>

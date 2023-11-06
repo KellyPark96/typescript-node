@@ -7,6 +7,8 @@ import { IReducerState } from '../reducers';
 const Home = () => {
   const { logInDone } = useSelector((state: IReducerState) => state.user);
   const { mainPosts } = useSelector((state: IReducerState) => state.post);
+  console.log(mainPosts);
+
   return (
     <AppLayout>
       {logInDone && <PostForm />}

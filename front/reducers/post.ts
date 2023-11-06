@@ -1,5 +1,41 @@
+import shortId from 'shortid';
+
 export const initialState = {
   mainPosts: [
+    {
+      id: 3,
+      User: {
+        id: 1,
+        nickname: 'kelly',
+      },
+      createAt: {},
+      content: '첫 번째 게시글 #해시태그 #익스프레스',
+      Images: [
+        {
+          src: 'https://img.etnews.com/photonews/1805/1071765_20180514163107_288_0001.jpg',
+        },
+        {
+          src: 'https://www.apparelnews.co.kr/upfiles/manage/202208/74ead5681e57cd805a6b3ce81b821e23.jpg',
+        },
+        {
+          src: 'https://usefulguide.net/wp-content/uploads/2022/08/img_theme5.jpg',
+        },
+      ],
+      Comments: [
+        {
+          User: {
+            nickname: 'nero1',
+          },
+          content: '우와~1',
+        },
+        {
+          User: {
+            nickname: 'hero1',
+          },
+          content: '이야~1',
+        },
+      ],
+    },
     {
       id: 1,
       User: {
@@ -69,8 +105,8 @@ export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 export type IPostReducerState = typeof initialState;
 
 const dummyPost = (data) => ({
-  id: data.id,
-  content: data.content,
+  id: shortId.generate(),
+  content: data,
   User: {
     id: 1,
     nickname: '제로초',
@@ -101,7 +137,7 @@ const reducer = (state = initialState, action) => {
     case LOAD_POSTS_SUCCESS:
       return {
         ...state,
-        // mainPosts: [dummyPost, ...state.mainPosts],
+        mainPosts: [dummyPost, ...state.mainPosts],
         loadPostsLoading: false,
         loadPostsDone: true,
       };
@@ -122,7 +158,7 @@ const reducer = (state = initialState, action) => {
     case ADD_POST_SUCCESS:
       return {
         ...state,
-        mainPosts: [dummyPost, ...state.mainPosts],
+        mainPosts: [dummyPost(data), ...state.mainPosts],
         addPostLoading: false,
         addPostDone: true,
       };
