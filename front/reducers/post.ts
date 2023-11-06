@@ -116,12 +116,10 @@ const dummyPost = (data) => ({
 });
 
 const dummyComment = (data) => ({
-  id: 2,
-  content: data,
   User: {
-    id: 1,
-    nickname: '제로초',
+    nickname: 'nero1',
   },
+  content: data,
 });
 
 const reducer = (state = initialState, action) => {
@@ -198,9 +196,14 @@ const reducer = (state = initialState, action) => {
         addCommentError: null,
       };
     case ADD_COMMENT_SUCCESS:
+      const postIndex = state.mainPosts.findIndex((post) => post.id === action.data.postId);
+      const post = { ...state.mainPosts[postIndex] };
+      post.Comments = [dummyComment(action.data.content), ...post.Comments];
+      const mainPosts = [...state.mainPosts];
+      mainPosts[postIndex] = post;
       return {
         ...state,
-        // mainPosts: [dummyComment, ...state.mainPosts],
+        mainPosts,
         addCommentLoading: false,
         addCommentDone: true,
       };

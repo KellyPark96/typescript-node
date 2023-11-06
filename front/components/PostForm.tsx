@@ -22,18 +22,10 @@ const PostForm = () => {
   }, [imageInput.current]);
 
   const onSubmit = useCallback(() => {
-    console.log('content:', text);
-
     dispatch({
       type: ADD_POST_REQUEST,
       data: text,
     });
-    console.log(
-      dispatch({
-        type: ADD_POST_REQUEST,
-        data: text,
-      })
-    );
   }, [text]);
 
   return (
