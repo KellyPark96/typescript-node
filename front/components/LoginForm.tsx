@@ -19,12 +19,12 @@ const LoginForm = () => {
 
   return (
     <FormWrapper onFinish={onSubmitForm}>
-      <div>
+      <div style={{ padding: '18px 20px' }}>
         <label htmlFor="user-email">Email</label>
         <br />
         <Input name="user-email" value={email} onChange={onChangeEmail} required />
       </div>
-      <div>
+      <div style={{ padding: '18px 20px' }}>
         <label htmlFor="user-password">Password</label>
         <br />
         <Input
@@ -49,11 +49,13 @@ const LoginForm = () => {
 };
 
 const ButtonWrapper = styled.div`
-  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 20px;
 `;
 
 const FormWrapper = styled(Form)`
-  padding: 10px;
+  margin: 0 4%;
 `;
 
 export default LoginForm;

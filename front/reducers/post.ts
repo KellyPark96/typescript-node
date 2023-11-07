@@ -3,47 +3,13 @@ import shortId from 'shortid';
 export const initialState = {
   mainPosts: [
     {
-      id: 3,
-      User: {
-        id: 1,
-        nickname: 'kelly',
-      },
-      createAt: {},
-      content: '첫 번째 게시글 #해시태그 #익스프레스',
-      Images: [
-        {
-          src: 'https://img.etnews.com/photonews/1805/1071765_20180514163107_288_0001.jpg',
-        },
-        {
-          src: 'https://www.apparelnews.co.kr/upfiles/manage/202208/74ead5681e57cd805a6b3ce81b821e23.jpg',
-        },
-        {
-          src: 'https://usefulguide.net/wp-content/uploads/2022/08/img_theme5.jpg',
-        },
-      ],
-      Comments: [
-        {
-          User: {
-            nickname: 'nero1',
-          },
-          content: '우와~1',
-        },
-        {
-          User: {
-            nickname: 'hero1',
-          },
-          content: '이야~1',
-        },
-      ],
-    },
-    {
       id: 1,
       User: {
         id: 1,
-        nickname: 'kelly',
+        nickname: 'Kelly',
       },
       createAt: {},
-      content: '첫 번째 게시글 #해시태그 #익스프레스',
+      content: 'First Post #HashTag #Express',
       Images: [
         {
           src: 'https://img.etnews.com/photonews/1805/1071765_20180514163107_288_0001.jpg',
@@ -60,13 +26,13 @@ export const initialState = {
           User: {
             nickname: 'nero',
           },
-          content: '우와~',
+          content: 'Wow~',
         },
         {
           User: {
             nickname: 'hero',
           },
-          content: '이야~',
+          content: 'yeah~',
         },
       ],
     },
@@ -109,17 +75,19 @@ const dummyPost = (data) => ({
   content: data,
   User: {
     id: 1,
-    nickname: '제로초',
+    nickname: 'Kelly',
   },
   Images: [],
   Comments: [],
 });
 
 const dummyComment = (data) => ({
-  User: {
-    nickname: 'nero1',
-  },
+  id: shortId.generate(),
   content: data,
+  User: {
+    id: 1,
+    nickname: 'Kelly',
+  },
 });
 
 const reducer = (state = initialState, action) => {
@@ -195,7 +163,7 @@ const reducer = (state = initialState, action) => {
         addCommentDone: false,
         addCommentError: null,
       };
-    case ADD_COMMENT_SUCCESS:
+    case ADD_COMMENT_SUCCESS: {
       const postIndex = state.mainPosts.findIndex((post) => post.id === action.data.postId);
       const post = { ...state.mainPosts[postIndex] };
       post.Comments = [dummyComment(action.data.content), ...post.Comments];
@@ -207,6 +175,7 @@ const reducer = (state = initialState, action) => {
         addCommentLoading: false,
         addCommentDone: true,
       };
+    }
     case ADD_COMMENT_FAILURE:
       return {
         ...state,

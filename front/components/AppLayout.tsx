@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { Col, Input, Menu, Row } from 'antd';
+import { Col, Divider, Input, Layout, Menu, Row } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -13,6 +13,8 @@ import { useRouter } from 'next/router';
 type LayoutProps = {
   children: ReactNode;
 };
+
+const { Header, Content, Sider } = Layout;
 
 const AppLayout = ({ children }: LayoutProps) => {
   const me = useSelector((state: IReducerState) => state.user.me);
@@ -41,37 +43,34 @@ const AppLayout = ({ children }: LayoutProps) => {
   };
 
   return (
-    <div>
-      <div
-        style={{
-          display: 'flex',
-          borderBottom: '1px solid rgba(5, 5, 5, 0.06)',
-          alignItems: 'center',
-        }}
-      >
+    <Layout style={{ height: '100vh' }}>
+      <Sider style={siderStyle}>
         <Menu
-          mode="horizontal"
+          mode="vertical"
           onClick={onClickMenu}
           selectedKeys={[current]}
           items={items}
-          style={{ flex: 1, border: 0 }}
+          style={{ flex: 1, border: 0, justifyContent: 'flex-end', backgroundColor: 'inherit' }}
         />
-        <SearchInput enterButton style={{ width: 200 }} />
-      </div>
-      <Row gutter={8}>
-        <Col xs={24} md={6}>
-          {me ? <UserProfile /> : <LoginForm />}
-        </Col>
-        <Col xs={24} md={12}>
-          {children}
-        </Col>
-        <Col xs={24} md={6}>
-          <a href="https://github.com/KellyPark96" target="_blank" rel="noreferrer noopener">
-            Github
-          </a>
-        </Col>
-      </Row>
-    </div>
+        <Divider style={{ margin: '40px 0' }} />
+        <SearchInput enterButton size="large" style={{ width: '100%' }} />
+      </Sider>
+      <Layout>
+        <Header style={headerStyle}>{me ? <UserProfile /> : <LoginForm />}</Header>
+        <Content>
+          <Row gutter={8}>
+            <Col xs={24} md={18}>
+              {children}
+            </Col>
+            <Col xs={24} md={6}>
+              <a href="https://github.com/KellyPark96" target="_blank" rel="noreferrer noopener">
+                Github
+              </a>
+            </Col>
+          </Row>
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 
@@ -80,3 +79,19 @@ const SearchInput = styled(Input.Search)`
 `;
 
 export default AppLayout;
+
+const siderStyle: React.CSSProperties = {
+  width: '320px !important',
+  maxWidth: '320px !important',
+  minWidth: '320px !important',
+  backgroundColor: '#fff',
+  boxShadow: '4px 0px 10px 0px rgba(0, 0, 0, 0.04)',
+  padding: '40px 10px 0 10px',
+};
+
+const headerStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  backgroundColor: '#F6F7F8',
+  padding: '0 40px',
+};

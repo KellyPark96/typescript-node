@@ -6,6 +6,7 @@ import {
   ADD_POST_SUCCESS,
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_REQUEST,
 } from '../reducers/post';
 
 function addPostAPI(data) {
@@ -53,7 +54,7 @@ function* addComment(action) {
 }
 
 function* watchAddComment() {
-  yield takeLatest(ADD_POST_REQUEST, addComment);
+  yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
 
 export default function* postSaga() {
