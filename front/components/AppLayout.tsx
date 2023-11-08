@@ -59,6 +59,7 @@ const AppLayout = ({ children }: LayoutProps) => {
           style={{ cursor: 'pointer', marginBottom: 40 }}
         />
         <Divider style={{ margin: '40px 0' }} />
+        {me && <Header style={headerStyle}>{<UserProfile />}</Header>}
         <Menu
           mode="vertical"
           onClick={onClickMenu}
@@ -67,8 +68,7 @@ const AppLayout = ({ children }: LayoutProps) => {
           style={{ flex: 1, border: 0, justifyContent: 'flex-end', backgroundColor: 'inherit' }}
         />
         <Divider style={{ margin: '40px 0' }} />
-        {me && <Header style={headerStyle}>{<UserProfile />}</Header>}
-        <SearchInput enterButton size="large" style={{ width: '100%', marginBottom: '30px' }} />
+        <SearchInput enterButton size="large" style={{ width: '100%' }} />
         <Button type="link" icon={<GithubOutlined />}>
           <Link href="https://github.com/KellyPark96" target="_blank" rel="noreferrer noopener">
             Github
