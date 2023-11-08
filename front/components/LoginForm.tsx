@@ -25,7 +25,7 @@ const LoginForm = () => {
       <div style={{ padding: '18px 20px' }}>
         <label htmlFor="user-email">Email</label>
         <br />
-        <Input name="user-email" value={email} onChange={onChangeEmail} required />
+        <Input name="user-email" type="email" value={email} onChange={onChangeEmail} required />
       </div>
       <div style={{ padding: '18px 20px' }}>
         <label htmlFor="user-password">Password</label>
