@@ -15,7 +15,7 @@ const UserProfile = () => {
 
   return (
     <Card
-      style={{ margin: '0 4%' }}
+      style={{ width: "100%" }}
       actions={[
         <div key="twit">
           Twit

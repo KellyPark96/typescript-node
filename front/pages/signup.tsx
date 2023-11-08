@@ -1,11 +1,12 @@
 import AppLayout from '../components/AppLayout';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, Layout } from 'antd';
 import { useCallback, useState } from 'react';
 import useInput from '../hooks/useInput';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { IReducerState } from '../reducers';
 import { SIGN_UP_REQUEST } from '../reducers/user';
+import { useRouter } from 'next/router';
 
 const SignUp = () => {
   const [email, onChangeEmail] = useInput('');
@@ -18,6 +19,7 @@ const SignUp = () => {
 
   const dispatch = useDispatch();
   const { signUpLoading, me } = useSelector((state: IReducerState) => state.user);
+  const router = useRouter();
   const onChangePasswordCheck = useCallback(
     (e) => {
       setPasswordCheck(e.target.value);
@@ -43,6 +45,10 @@ const SignUp = () => {
       return setTermError(true);
     }
 
+    // eslint-disable-next-line no-unreachable
+    console.log(email, password, passwordCheck, term);
+
+    router.push("/");
     return dispatch({
       type: SIGN_UP_REQUEST,
       data: {
@@ -52,12 +58,18 @@ const SignUp = () => {
       },
     });
 
-    // eslint-disable-next-line no-unreachable
-    console.log(email, password, passwordCheck, term);
   }, [email, password, passwordCheck, term]);
 
   return (
-    <AppLayout>
+    <Layout style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#fff",
+      width: "40em",
+      height: '100vh',
+      margin: "0 auto",
+    }}>
       <Form onFinish={onSubmit}>
         <div>
           <label htmlFor="user-email">Email</label>
@@ -115,7 +127,7 @@ const SignUp = () => {
           </Button>
         </div>
       </Form>
-    </AppLayout>
+    </Layout>
   );
 };
 

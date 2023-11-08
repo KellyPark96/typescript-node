@@ -1,14 +1,15 @@
 import { ReactNode, useState } from 'react';
-import { Col, Divider, Input, Layout, Menu, Row } from 'antd';
+import { Button, Col, Divider, Input, Layout, Menu, Row } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
 
 import UserProfile from './UserProfile';
-import LoginForm from './LoginForm';
 import { useSelector } from 'react-redux';
 import { IReducerState } from '../reducers';
 import { MenuProps } from 'antd/lib';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { GithubOutlined } from '@ant-design/icons';
 
 type LayoutProps = {
   children: ReactNode;
@@ -32,10 +33,12 @@ const AppLayout = ({ children }: LayoutProps) => {
       key: 'profile',
     },
     {
-      label: <Link href="/signup">SignUp</Link>,
-      key: 'signup',
+      label: <Link href="/login">Login</Link>,
+      key: 'login',
     },
   ];
+
+  const loggedInItems = items.filter((item) => item.key !== 'login');
 
   const [current, setCurrent] = useState(pathName);
   const onClickMenu: MenuProps['onClick'] = (e) => {
@@ -45,27 +48,38 @@ const AppLayout = ({ children }: LayoutProps) => {
   return (
     <Layout style={{ height: '100vh' }}>
       <Sider style={siderStyle}>
+        <Image
+          onClick={() => {
+            router.push('/');
+          }}
+          width={116}
+          height={30}
+          src={'/images/KELLY.svg'}
+          alt="KELLY"
+          style={{ cursor: 'pointer', marginBottom: 40 }}
+        />
+        <Divider style={{ margin: '40px 0' }} />
         <Menu
           mode="vertical"
           onClick={onClickMenu}
           selectedKeys={[current]}
-          items={items}
+          items={me ? loggedInItems : items}
           style={{ flex: 1, border: 0, justifyContent: 'flex-end', backgroundColor: 'inherit' }}
         />
         <Divider style={{ margin: '40px 0' }} />
-        <SearchInput enterButton size="large" style={{ width: '100%' }} />
+        {me && <Header style={headerStyle}>{<UserProfile />}</Header>}
+        <SearchInput enterButton size="large" style={{ width: '100%', marginBottom: '30px' }} />
+        <Button type="link" icon={<GithubOutlined />}>
+          <Link href="https://github.com/KellyPark96" target="_blank" rel="noreferrer noopener">
+            Github
+          </Link>
+        </Button>
       </Sider>
       <Layout>
-        <Header style={headerStyle}>{me ? <UserProfile /> : <LoginForm />}</Header>
         <Content>
           <Row gutter={8}>
-            <Col xs={24} md={18}>
+            <Col xs={24} md={24}>
               {children}
-            </Col>
-            <Col xs={24} md={6}>
-              <a href="https://github.com/KellyPark96" target="_blank" rel="noreferrer noopener">
-                Github
-              </a>
             </Col>
           </Row>
         </Content>
@@ -81,17 +95,17 @@ const SearchInput = styled(Input.Search)`
 export default AppLayout;
 
 const siderStyle: React.CSSProperties = {
-  width: '320px !important',
-  maxWidth: '320px !important',
-  minWidth: '320px !important',
   backgroundColor: '#fff',
   boxShadow: '4px 0px 10px 0px rgba(0, 0, 0, 0.04)',
-  padding: '40px 10px 0 10px',
+  padding: '60px 24px 0 24px',
 };
 
 const headerStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
-  backgroundColor: '#F6F7F8',
-  padding: '0 40px',
+  backgroundColor: '#fff',
+  padding: 0,
+  width: '100%',
+  height: 'auto',
+  marginBottom: '20px',
 };

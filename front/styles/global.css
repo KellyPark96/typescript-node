@@ -1,4 +1,15 @@
 .ant-layout-sider {
-  width: 240px !important;
-  min-width: 240px !important;
+  width: auto !important;
+  min-width: 200px !important;
+  max-width: 320px !important;
+  flex: 0 0 320px !important;
+}
+.ant-form {
+  width: 100%;
+}
+.ant-input {
+  padding: 10px 14px;
+}
+.ant-input-search-button {
+  height: 46px !important;
 }
