@@ -9,18 +9,21 @@ import {
   RetweetOutlined,
 } from '@ant-design/icons';
 import ButtonGroup from 'antd/lib/button/button-group';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
 import { IReducerState } from '../reducers';
 import Post from '../interface/post';
+import { REMOVE_POST_REQUEST } from '../reducers/post';
 
 export interface PostCardProps {
   post: Post;
 }
 
 const PostCard = ({ post }: PostCardProps) => {
+  const dispatch = useDispatch();
+  const { removePostLoading } = useSelector((state: IReducerState) => state.post);
   const [liked, setLiked] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const onToggleLike = useCallback(() => {
@@ -30,6 +33,13 @@ const PostCard = ({ post }: PostCardProps) => {
     setCommentFormOpened((prev) => !prev);
   }, []);
   const id = useSelector((state: IReducerState) => state.user.me?.id);
+
+  const onRemovePost = useCallback(() => {
+    dispatch({
+      type: REMOVE_POST_REQUEST,
+      data: post.id,
+    });
+  }, []);
 
   return (
     <div>
@@ -50,7 +60,9 @@ const PostCard = ({ post }: PostCardProps) => {
                 {id && post.User?.id === id ? (
                   <>
                     <Button>Edit</Button>
-                    <Button danger>Delete</Button>
+                    <Button danger loading={removePostLoading} onClick={onRemovePost}>
+                      Delete
+                    </Button>
                   </>
                 ) : (
                   <Button>Report</Button>
