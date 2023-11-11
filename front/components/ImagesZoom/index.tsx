@@ -1,13 +1,15 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Overlay, Header, CloseBtn, SlickWrapper, ImgWrapper, Global } from './style';
+import { postImageProp } from '../PostImages';
 
 interface Props {
-  images: [{ src: string }];
-
+  images: Array<postImageProp>;
   onClose(): void;
 }
 
 const ImagesZoom = ({ images, onClose }: Props) => {
+  console.log(images);
+
   return (
     <Overlay>
       <Global />

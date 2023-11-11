@@ -1,5 +1,6 @@
 import shortId from 'shortid';
 import { produce } from 'immer';
+import { faker } from '@faker-js/faker';
 
 export const initialState = {
   mainPosts: [
@@ -17,9 +18,6 @@ export const initialState = {
         },
         {
           src: 'https://www.apparelnews.co.kr/upfiles/manage/202208/74ead5681e57cd805a6b3ce81b821e23.jpg',
-        },
-        {
-          src: 'https://usefulguide.net/wp-content/uploads/2022/08/img_theme5.jpg',
         },
       ],
       Comments: [
@@ -52,6 +50,36 @@ export const initialState = {
   addCommentDone: false,
   addCommentError: null,
 };
+
+faker.seed(123);
+console.log(faker);
+
+initialState.mainPosts = initialState.mainPosts.concat(
+  Array(20)
+    .fill()
+    .map(() => ({
+      id: shortId.generate(),
+      User: {
+        id: shortId.generate(),
+        nickname: faker.internet.userName(),
+      },
+      content: faker.lorem.paragraph(),
+      Images: [
+        {
+          src: faker.image.url(),
+        },
+      ],
+      Comments: [
+        {
+          User: {
+            id: shortId.generate(),
+            nickname: faker.internet.userName(),
+          },
+          content: faker.lorem.sentence(),
+        },
+      ],
+    }))
+);
 
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';

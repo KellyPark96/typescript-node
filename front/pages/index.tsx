@@ -14,9 +14,18 @@ const Home = () => {
   return (
     <AppLayout>
       {logInDone && <PostForm />}
-      {mainPosts.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 20,
+          background: '#fff',
+        }}
+      >
+        {mainPosts.map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
+      </div>
     </AppLayout>
   );
 };
