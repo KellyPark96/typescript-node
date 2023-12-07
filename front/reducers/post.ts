@@ -56,7 +56,7 @@ console.log(faker);
 
 initialState.mainPosts = initialState.mainPosts.concat(
   Array(20)
-    .fill()
+    .fill('')
     .map(() => ({
       id: shortId.generate(),
       User: {
