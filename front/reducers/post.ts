@@ -3,40 +3,9 @@ import { produce } from 'immer';
 import { faker } from '@faker-js/faker';
 
 export const initialState = {
-  mainPosts: [
-    {
-      id: 1,
-      User: {
-        id: 1,
-        nickname: 'Kelly',
-      },
-      // createAt: {},
-      content: 'First Post #HashTag #Express',
-      Images: [
-        {
-          src: 'https://img.etnews.com/photonews/1805/1071765_20180514163107_288_0001.jpg',
-        },
-        {
-          src: 'https://www.apparelnews.co.kr/upfiles/manage/202208/74ead5681e57cd805a6b3ce81b821e23.jpg',
-        },
-      ],
-      Comments: [
-        {
-          User: {
-            nickname: 'nero',
-          },
-          content: 'Wow~',
-        },
-        {
-          User: {
-            nickname: 'hero',
-          },
-          content: 'yeah~',
-        },
-      ],
-    },
-  ],
+  mainPosts: [],
   imagePaths: [],
+  hasMorePosts: true,
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
@@ -51,11 +20,8 @@ export const initialState = {
   addCommentError: null,
 };
 
-faker.seed(123);
-console.log(faker);
-
-initialState.mainPosts = initialState.mainPosts.concat(
-  Array(20)
+export const generateDummyPost = (number) =>
+  Array(number)
     .fill('')
     .map(() => ({
       id: shortId.generate(),
@@ -78,8 +44,10 @@ initialState.mainPosts = initialState.mainPosts.concat(
           content: faker.lorem.sentence(),
         },
       ],
-    }))
-);
+    }));
+
+faker.seed(123);
+console.log(faker);
 
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
@@ -132,7 +100,8 @@ const reducer = (state = initialState, action) =>
       case LOAD_POSTS_SUCCESS:
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
-        draft.mainPosts.unshift(dummyPost(action.data));
+        draft.mainPosts = draft.mainPosts.concat(action.data);
+        draft.hasMorePosts = draft.mainPosts.length < 50;
         break;
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;

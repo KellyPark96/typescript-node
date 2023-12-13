@@ -75,9 +75,9 @@ const AppLayout = ({ children }: LayoutProps) => {
           </Link>
         </Button>
       </Sider>
-      <Layout>
+      <Layout style={{ background: '#fff' }}>
         <Content>
-          <Row gutter={8}>
+          <Row gutter={8} style={{ width: '80%', margin: '0 auto' }}>
             <Col xs={24} md={24}>
               {children}
             </Col>
